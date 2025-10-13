@@ -102,6 +102,26 @@
     footer{margin-top:36px; border-top:1px solid var(--border);}
     footer .wrap{padding-top:18px; padding-bottom:24px; color:var(--muted); font-size:.95rem; text-align:center}
   </style>
+/* napraw klik – warstwa dekoracyjna nie łapie myszy */
+.hero::after{ pointer-events: none; }
+
+/* ładny wygląd sekcji „Rozwiń/Zwiń” */
+.expand { margin-top: 14px; text-align: left; }
+.expand summary{
+  list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:12px; font-weight:700;
+  background:rgba(255,255,255,.18); color:var(--blue-ink);
+  border:1px solid rgba(255,255,255,.28);
+}
+.expand summary::-webkit-details-marker{ display:none; }
+.expand[open] summary::after{ content:" (Zwiń)"; font-weight:600; opacity:.9; }
+.expand-body{
+  margin-top:10px; padding:14px; border-radius:14px;
+  background:color-mix(in oklab, var(--card) 85%, transparent);
+  color:var(--blue-ink); border:1px solid rgba(255,255,255,.25);
+}
+
+  
 </head>
 <body>
   <div class="wrap">

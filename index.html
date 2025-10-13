@@ -1,269 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Strefa A • Wierzę w jednego Boga</title>
-  <meta name="description" content="Strefa A — hub treści i projektów. Jeden styl, przełącznik dzień/noc, wygodna nawigacja kafelkami."/>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="aplikacje.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ramzi Studio – Aplikacje dla Ciebie</title>
   <style>
-    :root{
-      --bg:#fbfaf7;
-      --card:#ffffff;
-      --ink:#1f2430;
-      --muted:#6b7280;
-      --blue:#0a4fa3;          /* maryjny niebieski jak na B/C */
-      --blue-ink:#ffffff;
-      --border:#e6e6ea;
-      --chip:#eef3ff;
-      --accent:#1f5fbf;
-      --accent-ink:#ffffff;
-      --radius:16px;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
-      --maxw:1100px;
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(255,255,255,0.15), transparent 60%);
+      animation: fogMove 60s infinite linear;
+      z-index: -1;
     }
-    .dark{
-      --bg:#0f1420;
-      --card:#141824;
-      --ink:#e7ecf6;
-      --muted:#aab3c6;
-      --blue:#0b3d7a;
-      --blue-ink:#ffffff;
-      --border:#263049;
-      --chip:#112244;
-      --accent:#7aa8ff;
-      --accent-ink:#001a44;
-      --shadow:0 10px 40px rgba(0,0,0,.4);
+    @keyframes fogMove {
+      0% { background-position: 0% 0%, 100% 100%; }
+      100% { background-position: 100% 100%, 0% 0%; }
+    }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+    body {
+      font-family: sans-serif;
+      background-color: #fff3ce;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, #444, #222);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      text-shadow: 2px 2px 4px #00000066;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+    header h1 {
+      font-size: 42px;
+      margin: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+    main { padding: 20px; }
+
+    .app-card {
+      background-color: #fdf0b5;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 50px auto;
+      max-width: 960px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    .fade-1 { animation-delay: 0.3s; }
+    .fade-2 { animation-delay: 0.6s; }
+    .fade-3 { animation-delay: 0.9s; }
+
+    a { color: #0044cc; text-decoration: none; position: relative; }
+    a::after {
+      content: ''; position: absolute; width: 100%; height: 2px;
+      bottom: 0; left: 0; background-color: #0044cc;
+      visibility: hidden; transform: scaleX(0);
+      transition: all 0.3s ease-in-out;
+    }
+    a:hover::after { visibility: visible; transform: scaleX(1); }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f9e6bd;
+      font-size: 14px;
+    }
+    .btn-brown {
+      display: inline-block;
+      background-color: #6f4e37;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+    .btn-brown:hover { background-color: #543924; transform: scale(1.05); }
+
+    .app-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:var(--bg); color:var(--ink);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      font-size:clamp(16px,1.05vw + .45rem,18px);
-      line-height:1.65; min-height:100vh; display:flex; flex-direction:column;
+    /* ROZWIJANY OPIS */
+    .expand {
+      margin-top: 16px;
     }
-    a{color:inherit; text-decoration:none}
-    .wrap{width:min(100%,var(--maxw)); margin-inline:auto; padding:clamp(12px,2vw,24px)}
-
-    /* ===== nagłówek jak na B/C ===== */
-    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(6px)}
-    .bar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      background:color-mix(in oklab, var(--card) 82%, transparent);
-      border:1px solid var(--border); border-radius:16px; padding:10px 14px; box-shadow:var(--shadow);
+    .expand summary {
+      list-style: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      background: #6f4e37;
+      color: #fff;
+      border: 1px solid #543924;
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
     }
-    .title{font-weight:800; letter-spacing:.2px}
-    .mode-btn{appearance:none; border:1px solid var(--border); background:var(--card); color:var(--ink);
-      padding:8px 12px; border-radius:12px; cursor:pointer; font-weight:600}
-
-    /* ===== hero niebieski ===== */
-    .hero{margin:clamp(18px,3vh,38px) 0 0; border-radius:20px; background:var(--blue); color:var(--blue-ink);
-      box-shadow:var(--shadow); overflow:hidden; position:relative}
-    .hero::after{content:""; position:absolute; inset:auto -20% -35% -20%; height:60%;
-      background:linear-gradient(to top, rgba(255,255,255,.18), rgba(255,255,255,0) 60%); transform:skewY(-6deg)}
-    .hero-inner{padding:clamp(18px,3.5vw,42px); text-align:center}
-    .hero h1{margin:.1em 0 .2em; font-size:clamp(1.8rem,2.4vw + .6rem,2.6rem)}
-    .hero p{margin:0 auto; max-width:75ch; font-size:clamp(1.05rem,.9vw + .8rem,1.25rem); opacity:.98}
-
-    /* ===== panel: wyszukiwarka + filtry ===== */
-    .controls{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:26px 0}
-    .search{
-      flex:1 1 280px; display:flex; align-items:center; gap:10px;
-      background:var(--card); border:1px solid var(--border); border-radius:12px; padding:10px 12px
+    .expand summary::-webkit-details-marker { display: none; }
+    .expand[open] summary::after {
+      content: " (Zwiń)";
+      opacity: .9;
+      font-weight: normal;
     }
-    .search input{border:0; outline:0; background:transparent; color:var(--ink); width:100%}
-    .chips{display:flex; gap:8px; flex-wrap:wrap}
-    .chip{
-      padding:8px 12px; border-radius:999px; background:var(--chip);
-      border:1px solid var(--border); cursor:pointer; font-size:14px
+    .expand-body {
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #fff9e4;
+      color: #333;
+      border: 1px solid #ead9ab;
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
     }
-    .chip.active{background:var(--accent); color:var(--accent-ink); border-color:transparent}
-
-    /* ===== siatka kafelków ===== */
-    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); align-items:stretch}
-    .card{
-      background:var(--card); border:1px solid var(--border); border-radius:18px;
-      box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden
-    }
-    .thumb{
-      aspect-ratio:16/9; display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(135deg, #f7f2e2, #ffffff 60%); font-size:38px
-    }
-    .body{padding:14px 14px 8px}
-    .card h3{margin:0 0 6px; font-size:18px}
-    .card p{margin:0 0 12px; color:var(--muted); font-size:14px}
-    .tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:auto; padding:0 14px 14px}
-    .tag{font-size:12px; padding:4px 8px; border-radius:999px; background:var(--chip); border:1px solid var(--border)}
-    .go{margin:0 14px 14px; display:inline-block; padding:10px 14px; border-radius:12px;
-      background:var(--accent); color:var(--accent-ink); text-align:center; font-weight:700}
-
-    /* ===== stopka ===== */
-    footer{margin-top:36px; border-top:1px solid var(--border);}
-    footer .wrap{padding-top:18px; padding-bottom:24px; color:var(--muted); font-size:.95rem; text-align:center}
   </style>
-/* napraw klik – warstwa dekoracyjna nie łapie myszy */
-.hero::after{ pointer-events: none; }
-
-/* ładny wygląd sekcji „Rozwiń/Zwiń” */
-.expand { margin-top: 14px; text-align: left; }
-.expand summary{
-  list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
-  padding:8px 12px; border-radius:12px; font-weight:700;
-  background:rgba(255,255,255,.18); color:var(--blue-ink);
-  border:1px solid rgba(255,255,255,.28);
-}
-.expand summary::-webkit-details-marker{ display:none; }
-.expand[open] summary::after{ content:" (Zwiń)"; font-weight:600; opacity:.9; }
-.expand-body{
-  margin-top:10px; padding:14px; border-radius:14px;
-  background:color-mix(in oklab, var(--card) 85%, transparent);
-  color:var(--blue-ink); border:1px solid rgba(255,255,255,.25);
-}
-
-  
 </head>
 <body>
-  <div class="wrap">
-    <!-- Nagłówek -->
-    <header aria-label="Nagłówek">
-      <div class="bar">
-        <div class="title">✝️ Strefa A — Wierzę w jednego Boga</div>
-        <button class="mode-btn" id="modeBtn" type="button" aria-pressed="false" title="Przełącz: dzień / noc">☀️ Dzień / 🌙 Noc</button>
-      </div>
-    </header>
+  <header>
+    <h1>Ramzi Studio – Aplikacje dla Ciebie</h1>
+  </header>
 
-    <!-- Hero -->
-    <section class="hero" aria-label="Wprowadzenie">
-      <div class="hero-inner">
-        <h1>Wybierz dalej — treści i projekty w jednym miejscu</h1>
-        <p>To główna strona Strefy A. Nie ma tu przycisku „wstecz” — po prostu wybierasz dalej to, co Cię prowadzi. Dzień/Noc działa jak na pozostałych stronach.</p>
- 
-        <details class="expand">
-  <summary>➤ Rozwiń</summary>
-  <div class="expand-body">
-    <p>Tu wklej swój tekst wprowadzający. Możesz dodać akapity, cytaty, listy, linki — wszystko, co chcesz, żeby się rozwinęło po kliknięciu.</p>
-  </div>
-</details>
+  <main>
+    <div class="app-card fade-1">
+      <h2>🧠 Aplikacje tworzone z myślą o Tobie</h2>
+      <p>Jesteśmy małym zespołem – tworzymy aplikacje, które łączą technologię z troską.</p>
+      <ul style="list-style-type:none; padding-left:0;">
+        <li>🔷 Służą do nauki, organizacji czasu, ochrony komputera.</li>
+        <li>🔷 Działają lokalnie – bez reklam i zbędnych uprawnień.</li>
+      </ul>
 
-      </div>
-    </section>
-
-    <!-- Panel sterowania -->
-    <section class="controls" aria-label="Wyszukiwarka i filtry">
-      <label class="search" title="Szukaj po tytule i opisie">
-        <span>🔎</span>
-        <input id="q" type="search" placeholder="Szukaj projektów lub rozdziałów…" />
-      </label>
-      <div class="chips" id="chips">
-        <button class="chip active" data-cat="*">Wszystko</button>
-        <button class="chip" data-cat="Miejscowość">Miejscowość</button>
-        <button class="chip" data-cat="Publicystyka">Publicystyka</button>
-        <button class="chip" data-cat="Ekologia">Ekologia</button>
-        <button class="chip" data-cat="Duchowość">Duchowość</button>
-        <button class="chip" data-cat="Znaki Maryi">Znaki Maryi</button>
-      </div>
-    </section>
-
-    <!-- Siatka projektów -->
-    <main>
-      <section id="grid" class="grid" aria-live="polite"></section>
-      <noscript>
-        <ul>
-          <li><a href="https://majstered.github.io/siedliszcze.github.io/">Siedliszcze</a> — strona o miejscowości.</li>
-          <li><a href="https://majstered.github.io/strazopis.github.io/">Strażopis</a> — publicystyka i opowieści.</li>
-          <li><a href="https://majstered.github.io/odpady.github.io/">Odpady</a> — segregacja i ekologia.</li>
-          <li><a href="https://majstered.github.io/yanopis.github.io/">Yanopis</a> — duchowe treści.</li>
-        </ul>
-      </noscript>
-    </main>
-
-    <footer>
-      <div class="wrap">✦ © 2025 <strong>Albert Studio</strong> — Wszystkie prawa zastrzeżone</div>
-    </footer>
-  </div>
-
-  <script>
-    /* ===== dane kafelków ===== */
-    const projects = [
-      { title:"Siedliszcze — strona główna", url:"https://majstered.github.io/siedliszcze.github.io/", desc:"Aktualności, zdjęcia i informacje o naszej miejscowości.", emoji:"🏠", cat:"Miejscowość", tags:["lokalnie","społeczność"] },
-      { title:"Strażopis", url:"https://majstered.github.io/strazopis.github.io/", desc:"Publicystyka, opowieści i reportaże.", emoji:"✍️", cat:"Publicystyka", tags:["artykuły","felietony"] },
-      { title:"Odpady • Ekologia", url:"https://majstered.github.io/odpady.github.io/", desc:"Segregacja, kalendarze odbioru i porady zero-waste.", emoji:"♻️", cat:"Ekologia", tags:["recykling","poradnik"] },
-      { title:"Yanopis", url:"https://majstered.github.io/yanopis.github.io/", desc:"Duchowe rozważania, modlitwy, materiały do czytania.", emoji:"📜", cat:"Duchowość", tags:["modlitwa","refleksje"] },
-      /* Placeholdery pod „Znaki Maryi” – podmień URL-e gdy będą gotowe */
-      { title:"Znaki Maryi — Rozdział 1: Jak spotkać Maryję?", url:"#", desc:"Wprowadzenie w ciszę, skupienie i drogę serca.", emoji:"🌹", cat:"Znaki Maryi", tags:["wprowadzenie","modlitwa"] },
-      { title:"Znaki Maryi — Różaniec", url:"#", desc:"Znaczenie różańca, obietnice i praktyka na co dzień.", emoji:"📿", cat:"Znaki Maryi", tags:["różaniec","praktyka"] },
-      { title:"Znaki Maryi — Objawienia przez wieki", url:"#", desc:"Chronologia uznanych objawień i ich przesłanie.", emoji:"🕊️", cat:"Znaki Maryi", tags:["historia","przesłanie"] },
-    ];
-
-    /* ===== render grid ===== */
-    const grid = document.getElementById('grid');
-    const q = document.getElementById('q');
-    const chips = document.getElementById('chips');
-    let activeCat = '*';
-
-    function createCard(item){
-      const el = document.createElement('article');
-      el.className = 'card';
-      el.innerHTML = `
-        <div class="thumb" aria-hidden="true">${item.emoji ?? "🔗"}</div>
-        <div class="body">
-          <h3>${item.title}</h3>
-          <p>${item.desc}</p>
+      <details class="expand">
+        <summary>➤ Rozwiń opis</summary>
+        <div class="expand-body">
+          <p>Nasze programy mają jeden cel – pomagać Ci w codzienności.  
+          Nie zbieramy danych, nie wpychamy reklam.  
+          Każdy projekt powstał z pasji i pragnienia dobra użytkownika.</p>
         </div>
-        <div class="tags">
-          <span class="tag">${item.cat}</span>
-          ${(item.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
+      </details>
+    </div>
+
+    <div class="app-card fade-2">
+      <h2>🕰️ Twój czas, Twoje zdrowie</h2>
+      <p>Program wspierający równowagę między skupieniem a odpoczynkiem.  
+         Wzorowany na metodzie <strong>Pomodoro</strong>.</p>
+      <div class="app-buttons">
+        <a href="https://drive.google.com/uc?export=download&id=1tUGEEMyGp89fHnuOswRiiA2xClfyboDE" target="_blank" class="btn-brown">⬇️ Pobierz</a>
+        <a href="https://majstered.github.io/twoj-czas-twoje-zdrowie/" target="_blank" class="btn-brown">ℹ️ Opis</a>
+      </div>
+
+      <details class="expand">
+        <summary>➤ Rozwiń opis</summary>
+        <div class="expand-body">
+          <ul>
+            <li>🌐 Interfejs PL / EN / DE / FR</li>
+            <li>⏳ Tryby Pomodoro 30/2 i 45/5</li>
+            <li>💤 Wyłącznik komputera</li>
+            <li>🧠 Minimalny wygląd, spokojne kolory</li>
+          </ul>
         </div>
-        <a class="go" href="${item.url}">Przejdź</a>
-      `;
-      return el;
-    }
+      </details>
+    </div>
 
-    function applyFilters(){
-      const needle = (q.value || '').trim().toLowerCase();
-      grid.innerHTML = '';
-      projects
-        .filter(it => activeCat==='*' ? true : it.cat===activeCat)
-        .filter(it => {
-          if(!needle) return true;
-          const hay = [it.title, it.desc, it.cat, ...(it.tags||[])].join(' ').toLowerCase();
-          return hay.includes(needle);
-        })
-        .forEach(it => grid.appendChild(createCard(it)));
+    <div class="app-card fade-3">
+      <h2>🛡️ Strażnik Procesów</h2>
+      <p>Narzędzie do monitorowania procesów i czyszczenia systemu Windows.</p>
+      <div class="app-buttons">
+        <a href="https://drive.google.com/uc?export=download&id=1KX_18oI72qjyJYMLtjIz3NnX3CPHKBm1" target="_blank" class="btn-brown">⬇️ Pobierz</a>
+        <a href="https://majstered.github.io/strazopis.github.io/" target="_blank" class="btn-brown">ℹ️ Opis</a>
+      </div>
 
-      if(!grid.children.length){
-        const empty = document.createElement('div');
-        empty.style.color = 'var(--muted)';
-        empty.textContent = 'Brak wyników. Spróbuj innego hasła lub filtra.';
-        grid.appendChild(empty);
-      }
-    }
+      <details class="expand">
+        <summary>➤ Rozwiń opis</summary>
+        <div class="expand-body">
+          <ul>
+            <li>🦠 Wykrywanie podejrzanych procesów</li>
+            <li>📤 Przycisk „Zaufaj” i czyszczenie logów</li>
+            <li>🧹 Usuwanie folderów aktualizacji</li>
+            <li>🕵️ Monitoring i powiadomienia</li>
+          </ul>
+        </div>
+      </details>
+    </div>
 
-    /* ===== wyszukiwarka & filtry ===== */
-    q.addEventListener('input', applyFilters);
-    chips.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.chip');
-      if(!btn) return;
-      [...chips.querySelectorAll('.chip')].forEach(c=>c.classList.remove('active'));
-      btn.classList.add('active');
-      activeCat = btn.dataset.cat;
-      applyFilters();
-    });
+    <div class="app-card fade-3">
+      <h2>🎵 mp3_turbo_1.0 – Twoja osobista biblioteka dźwięku
+        <span style="background-color:#ff6868;color:white;padding:2px 6px;border-radius:4px;font-size:14px;">Nowość!</span>
+      </h2>
+      <p>Odtwarzaj i pobieraj muzykę MP3 z legalnych źródeł, twórz 4 listy odtwarzania, słuchaj bez reklam.</p>
+      <div class="app-buttons">
+        <a href="https://drive.google.com/uc?export=download&id=1T0UCIwxEslcYZ40HKmPXe3DPb9wYWIwh" target="_blank" class="btn-brown">⬇️ Pobierz</a>
+        <a href="https://majstered.github.io/yanosik-turbo-2028/" target="_blank" class="btn-brown">ℹ️ Opis</a>
+      </div>
 
-    /* ===== Dzień/Noc – jak na B/C ===== */
-    const modeBtn = document.getElementById('modeBtn');
-    const LS_KEY = 'theme-pref';
-    const applyMode = (m)=>{ document.body.classList.toggle('dark', m==='dark'); modeBtn.setAttribute('aria-pressed', m==='dark'); }
-    const saved = localStorage.getItem(LS_KEY); if(saved){ applyMode(saved); }
-    modeBtn.addEventListener('click', ()=>{
-      const now = document.body.classList.contains('dark') ? 'light' : 'dark';
-      localStorage.setItem(LS_KEY, now);
-      applyMode(now);
-    });
+      <details class="expand">
+        <summary>➤ Rozwiń opis</summary>
+        <div class="expand-body">
+          <ul>
+            <li>✅ Tworzenie 4 playlist</li>
+            <li>✅ Odtwarzanie bez internetu</li>
+            <li>✅ Prosty interfejs i obsługa</li>
+            <li>✅ Zgodność z prawem dozwolonego użytku</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </main>
 
-    /* start */
-    applyFilters();
-  </script>
+  <footer>
+    © 2025 Ramzi Studio – Wszystkie prawa zastrzeżone
+  </footer>
 </body>
 </html>

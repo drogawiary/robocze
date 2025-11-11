@@ -179,25 +179,27 @@
 }
 
 .footer-bar button#peekBtn {
-  padding: 2px 6px;       /* 🔹 prawie przy literach */
+  padding: 0px 18px;       /* 🔹 zero góra/dół, szeroko po bokach */
+  line-height: 1;          /* 🔹 usuwa pionowy luz wokół tekstu */
+  height: 24px;            /* 🔹 ustawia konkretną wysokość przycisku */
+  font-size: 14px;
   background: #dbe5ff;
   color: #000033;
   border: none;
-  border-radius: 6px;     /* 🔹 mniejsze zaokrąglenie */
+  border-radius: 8px;
   font-weight: 700;
-  font-size: 14px;        /* 🔹 lekko mniejsze litery, żeby pasowało proporcją */
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  line-height: 1;         /* 🔹 bez dodatkowej wysokości */
   text-align: center;
   box-sizing: border-box;
 
   cursor: pointer;
   transition: 0.2s ease;
 }
+
 
 
 .footer-bar button#peekBtn:hover {

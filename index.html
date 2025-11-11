@@ -96,43 +96,10 @@
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; background:var(--bg); color:var(--text); font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;}
-/* Panel-obwolutka tylko dla stopki */
-.footer-frame{
-  background: linear-gradient(180deg, var(--panel), var(--panel-2));
-  border: 1px solid #ffffff12;
-  border-radius: 18px;
-  box-shadow: 0 10px 25px #0004;
-  padding: 12px 8px 20px 8px;
-  margin-top: 28px;
-}
-.dark .footer-frame{
-  border-color:#ffffff22;
-  box-shadow:0 10px 35px #0006;
-}
-
+.wrap{max-width:800px; margin:0 auto; padding:18px;}
   header{display:block; margin-bottom:14px}
-.banner{
-  background: linear-gradient(180deg, #0d47a1, #1976d2);  /* głęboki gradient niebieski */
-  color:#ffffff;
-  border-radius:22px;
-  padding:26px 18px;
-  text-align:center;
-  box-shadow:0 8px 30px rgba(0,0,0,.35);
-  border:1px solid #1a3c80;
-  margin-bottom:14px;
-}
-
-.banner h1{
-  margin:0;                        /* usuwa marginesy domyślne wokół nagłówka */
-  font-size:clamp(22px,4.5vw,32px);/* płynny rozmiar: min 22px, max 32px */
-  font-weight:800;                 /* pogrubiony tytuł */
-  letter-spacing:.5px;             /* lekkie rozstawienie liter */
-  color:#fff;                      /* biały tekst */
-  text-shadow: 0 0 8px #ffffffcc, 0 0 22px #d1e6ff99; /* delikatny blask jak w różańcu */
-}
-
-
-  .controlbar{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; position:relative}
+  .banner{background:linear-gradient(180deg,#cfe3ff,#e9f0ff); color:#0b2a55; border-radius:18px; padding:18px; text-align:center; box-shadow:0 8px 24px #0001; border:1px solid #ffffff70; margin-bottom:12px}
+  .banner h1{margin:0; font-size:clamp(22px,4.5vw,32px); font-weight:800; letter-spacing:.2px}.controlbar{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; position:relative}
   .menu{position:absolute; top:100%; margin-top:8px; background:var(--panel); border:1px solid #00000015; box-shadow:0 14px 40px #0003; border-radius:14px; padding:8px; min-width:220px; max-width:280px; z-index:50; display:none}
   .menu.show{display:block}
   .menu h4{margin:6px 8px 8px; font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.2px}

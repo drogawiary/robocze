@@ -180,8 +180,9 @@
 
 .footer-bar button#peekBtn {
   margin-top: 10px;
-  width: 36px;
-  height: 36px;
+  padding: 6px 14px;   /* 🔹 odrobina luzu wewnątrz */
+  min-width: 80px;     /* 🔹 zachowuje kształt dla krótkiego (i) */
+  height: auto;        /* 🔹 pozwala rosnąć przy dłuższym tekście */
   font-weight: 700;
   background: #dbe5ff;
   color: #000033;

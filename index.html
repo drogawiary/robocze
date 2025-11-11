@@ -1,482 +1,413 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Droga wiary</title>
-  <meta name="description" content="Droga Wiary — strona dla katolików."/>
-  <style>
-    * { box-sizing: border-box; -webkit-text-size-adjust: 100%; }
-    html, body { margin: 0; padding: 0; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nowenna rozwiązująca węzły — interaktywnie (9 dni)</title>
+<style>
+  :root{
+    --bg: #f3f6ff;
+    --panel: #ffffff;
+    --panel-2:#eef2ff;
+    --text:#0e1533;
+    --muted:#6370a0;
+    --accent:#2450ff;
+    --accent-2:#6ea8ff;
+    --ring:#2450ff22;
+    --ok:#2563eb;
+    --ok-strong:#1d4ed8;
+    --soft:#e8edff;
+    --chip:#dbe5ff;
+  }
+  .dark{
+    --bg:#0f1221;
+    --panel:#161a2f;
+    --panel-2:#1a1f3a;
+    --text:#e8edff;
+    --muted:#a7b1e6;
+    --accent:#8ea0ff;
+    --accent-2:#6ea8ff;
+    --ring:#8ea0ff33;
+    --ok:#8ea0ff;
+    --ok-strong:#b2c2ff;
+    --soft:#20254a;
+    --chip:#272f63;
+  }
+/* 🌙 Jasny maryjny kolor i delikatna poświata dla dni tygodnia (tryb nocny) */
+.dark .content a[data-rosary] {
+  color: #b9d5ff;              /* pastelowy maryjny błękit */
+  font-weight: 600;
+  text-shadow: 0 0 6px #4f7fff; /* subtelny efekt poświaty */
+  transition: all 0.3s ease;
+}
 
-    :root{
-      --bg:#1b2a49; --panel:#22355c; --panel-2:#1d2e50;
-      --ink:#e7ecf6; --muted:#aab3c6; --border:#2e4a7f;
-      --accent:#4a8cff; --accent-2:#7aa8ff; --shadow:0 10px 25px rgba(0,0,0,.25);
-    }
+.dark .content a[data-rosary]:hover {
+  color: #e3eeff;              /* jaśniejszy przy najechaniu */
+  text-shadow: 0 0 10px #a5c9ff, 0 0 20px #7fb3ff; /* efekt aurory */
+  text-decoration: underline;
+}
 
-    body {
-      font-family: system-ui, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      display: flex;
-      justify-content: center;
-      padding: 16px;
-    }
+/* 💫 Poświata dla paska informacyjnego "tryb podglądu" */
+.dark .previewInfo {
+  background: #101940;
+  box-shadow: 0 0 14px #2e4aff80; /* delikatny błękitny glow */
+  border: 1px solid #3a55ff40;
+  color: #ffffff;
+  text-shadow: 0 0 8px #7fa7ff, 0 0 16px #4f7fff;
+}
 
-    .wrap {
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      max-width: 900px;
-      width: 100%;
-      padding: 16px;
-    }
+.previewInfo {
+  background: #e8f0ff;
+  box-shadow: 0 0 12px #bcd2ff;
+  border: 1px solid #d0e0ff;
+  color: #0e1533;
+  font-weight: 700;
+}
 
-    header.book {
-      background: linear-gradient(145deg,#0b3d91,#1565c0,#1e88e5);
-      color: #fff;
-      text-align: center;
-      padding: 32px 20px;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      font-size: clamp(32px, 5vw, 52px);
-      font-family: 'Playfair Display', serif;
-      text-shadow: 0 0 8px #fff, 0 0 16px #a8c8ff;
-      box-shadow: inset 0 0 10px #ffffff22;
-    }
+/* 💎 Poświata i pogrubienie dla tytułów tajemnic różańca w trybie nocnym */
+.dark .content h4,
+.dark .content strong {
+  color: #dbe4ff;
+  font-weight: 700;
+  text-shadow: 0 0 8px #7fa7ff, 0 0 16px #4f7fff; /* maryjna poświata */
+}
 
-    .buttons-frame {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(80px, 1fr));
-      gap: 8px;
-      justify-items: center;
-      align-items: center;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px;
-      box-shadow: var(--shadow);
-    }
+/* W dzień – tylko mocniejszy kontrast, bez świecenia */
+.content h4,
+.content strong {
+  color: #0e1533;
+  font-weight: 700;
+}
 
-    .nav-btn {
-      padding: 6px 10px;
-      border: 1px solid var(--accent);
-      color: #fff;
-      background: transparent;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all .3s ease;
-      min-width: unset;
-      width: auto;
-      box-sizing: border-box;
-    }
+ /* ✝️ Styl dopisku o węźle w nowennie */
+.dark .wezel-info {
+  color: #cdd9ff;
+  text-shadow: 0 0 8px #7fa7ff, 0 0 16px #4f7fff; /* delikatny blask */
+}
 
-    .nav-btn.active, .nav-btn:hover {
-      background: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 3px 10px rgba(74,140,255,.4);
-    }
+.wezel-info {
+  color: #24336b;
+  font-style: italic;
+  margin-top: 6px;
+}
+   
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+  .wrap{max-width:800px; margin:0 auto; padding:18px;}
+  header{display:block; margin-bottom:14px}
+  .banner{background:linear-gradient(180deg,#cfe3ff,#e9f0ff); color:#0b2a55; border-radius:18px; padding:18px; text-align:center; box-shadow:0 8px 24px #0001; border:1px solid #ffffff70; margin-bottom:12px}
+  .banner h1{margin:0; font-size:clamp(22px,4.5vw,32px); font-weight:800; letter-spacing:.2px}
+  .controlbar{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; position:relative}
+  .menu{position:absolute; top:100%; margin-top:8px; background:var(--panel); border:1px solid #00000015; box-shadow:0 14px 40px #0003; border-radius:14px; padding:8px; min-width:220px; max-width:280px; z-index:50; display:none}
+  .menu.show{display:block}
+  .menu h4{margin:6px 8px 8px; font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.2px}
+  .menu .item{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-radius:10px; cursor:pointer}
+  .menu .item:hover{background:var(--soft)}
+  .menu .item .meta{font-size:11px; color:var(--muted)}
+  .menu .del{border:none; background:#f1f3ff; color:#1a2a7a; border-radius:8px; padding:6px 8px; cursor:pointer}
+  .menu .empty{padding:10px; font-size:12px; color:var(--muted)}
+  .controls{display:flex; gap:8px; align-items:center;}
+  .field{display:flex; gap:8px; align-items:center; background:var(--panel); border:1px solid #00000010; padding:6px 8px; border-radius:12px}
+  .field input{border:none; outline:none; background:transparent; color:var(--text); font-size:14px; padding:6px; width:130px}
+  .btn{border:none; border-radius:12px; padding:10px 14px; cursor:pointer; font-weight:700; letter-spacing:.2px}
+  .toggle{background:var(--panel); border:1px solid #00000010; box-shadow:0 4px 14px #0002;}
+  .square{width:40px; height:40px; padding:0; display:grid; place-items:center; background:#e7ebff; color:#1a2a7a}
+  .square.active{background:#1a2a7a; color:#e7ebff}
+  .start{background:linear-gradient(180deg, #35b86b, #2ea45f); color:white}
+  .card{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid #ffffff12; border-radius:18px; padding:18px; box-shadow:0 10px 30px #0003}
+  .content{min-height:120px; padding:14px; border-radius:14px; background:var(--soft); border:1px solid #ffffff22; line-height:1.6}
+  .content h3{margin:0 0 10px; font-size:21px}
+  .meta{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px; font-size:13px; color:var(--muted)}
+  .ctrl-bottom{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px; flex-wrap:wrap}
+  .nav-btn{border:none; border-radius:999px; padding:12px 20px; background:#2450ff; color:white; font-weight:800; letter-spacing:.3px; cursor:pointer}
+  .nav-btn:disabled{opacity:.5; cursor:not-allowed}
+  .nav-btn.secondary{background:#d7dcef; color:#1c275f}
+  .footer{margin-top:12px; display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap; overflow-x:auto; padding:6px 4px}
+  .dot{display:inline-block; width:18px; height:18px; border-radius:4px; background:#c9d3ff; border:1px solid #9bb1ff; opacity:.9}
+  .dot.done{background:var(--ok); border-color:var(--ok-strong); opacity:1}
+  .dot.current{background:var(--ok); border-color:var(--ok-strong); opacity:1}
+  .toast{position:fixed; inset:auto 0 22px 0; display:flex; justify-content:center; pointer-events:none}
+  .toast > div{background:#101940; color:white; padding:10px 16px; border-radius:12px; box-shadow:0 10px 30px #0007; opacity:0; transform:translateY(8px)}
+  .toast.show > div{opacity:1; transform:translateY(0); transition:all .25s ease}
+  .hint{font-size:12px; color:var(--muted); text-align:center; margin-top:6px}
 
-    @media (max-width: 700px) {
-      .buttons-frame { grid-template-columns: repeat(2, 1fr); }
-      .nav-btn { width: 90%; }
-    }
-
-    .intro-box {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-top: 24px;
-      line-height: 1.6;
-    }
-
-    .intro-box h2 {
-      margin-top: 0;
-      font-size: 1.4rem;
-      color: var(--ink);
-    }
-
-    .tiles {
-      display: none;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-      animation: fade .25s ease-out;
-    }
-
-    @keyframes fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none;} }
-
-    .card {
-      background: #f5ecd9;
-      color: #2a1f0e;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.2);
-      padding: 20px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card img {
-      width: 80px;
-      height: auto;
-      margin: 0 auto 10px;
-      border-radius: 10px;
-    }
-
-    .card h3 { margin: 10px 0; font-size: 1.2rem; }
-    .card p  { font-size: 0.9rem; color: #333; flex-grow: 1; }
-
-    .tags { margin: 10px 0; }
-    .tag {
-      background: var(--accent);
-      color: #fff;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      margin-right: 6px;
-    }
-
-    .go {
-      display: inline-block;
-      margin-top: 10px;
-      background: var(--accent);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background .3s;
-    }
-
-    .go:hover { background: var(--accent-2); }
-
-    /* Czytnik artykułów */
-    #reader article p { margin: 0 0 10px; }
-    #reader article h2, #reader article h3 { margin: 12px 0 8px; }
-
-    footer {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-align: center;
-      color: var(--ink);
-      padding: 20px;
-      margin-top: 40px;
-      font-size: 0.95rem;
-    }
-
-    footer a {
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    footer a:hover { color: var(--accent-2); }
-  </style>
+  /* Pasek informacyjny o trybie podglądu */
+  .previewInfo{
+    display:none;
+    margin:8px 0 0;
+    padding:10px 14px;
+    border-radius:12px;
+    background:#101940;
+    color:#ffffff;
+    font-weight:700;
+    letter-spacing:.2px;
+    box-shadow:0 10px 24px #0005;
+    text-align:center;
+  }
+  .dark .previewInfo{ background:#0b133a; }
+</style>
 </head>
 <body>
   <div class="wrap">
-    <header class="book">Droga wiary</header>
+    <header>
+      <div class="banner"><h1>Nowenna rozwiązująca węzły</h1></div>
+      <div class="controlbar">
+        <button id="themeBtn" class="btn toggle" title="Tryb dzień / noc">🌞/🌙</button>
+        <div class="field">
+          <button id="nameBtn" class="btn square" title="Wybierz zapisane imię">👤</button>
+          <input id="nameInput" type="text" placeholder="np. Ania" maxlength="24" />
+          <button id="startBtn" class="btn start">Start</button>
+          <button id="peekBtn" class="btn square" title="Podgląd wszystkich dni (X)">(i)</button>
+        </div>
+        <div id="nameMenu" class="menu" aria-hidden="true"></div>
+      </div>
+    </header>
 
-    <div class="buttons-frame">
-      <button class="nav-btn" id="btn-wiara" aria-pressed="false">Moja wiara</button>
-      <button class="nav-btn" id="btn-arty" aria-pressed="false">Artykuły</button>
-      <button class="nav-btn" id="btn-modlitwy" aria-pressed="false">Modlitwy</button>
-      <button class="nav-btn" id="btn-ksiazki" aria-pressed="false">Książki</button>
+    <!-- Pasek informujący o trybie podglądu -->
+    <div id="previewInfo" class="previewInfo" role="status" aria-live="polite">
+      Jesteś w trybie podglądu całej nowenny
     </div>
 
-    <div class="intro-box" id="intro">
-      <h2>Wprowadzenie</h2>
-      <p><strong>Dlaczego bywa tak ciężko?</strong> Wielu świętych mówiło, że właśnie dlatego różaniec bywa trudny: bo diabeł wie, jak wielką moc ma ta modlitwa. Wie, że jedno „Zdrowaś” może ocalić duszę, że różaniec w rękach dziecka jest groźniejszy dla piekła niż największa armia. Dlatego odciąga nas rozproszeniem, znużeniem, myślą, że to „nudne” albo „niepotrzebne”.</p>
-      <p>Gdy trudno ci zacząć, zatrzymaj się na chwilę i pomyśl o słowach modlitwy „Zdrowaś Maryjo”. Spróbuj <strong>przytulić się sercem do Maryi</strong> – jak dziecko do swojej Matki. Ona rozumie wszystko: twoje zmęczenie, rozproszenia, lęki i brak siły. Chce tylko jednego – byś pozwolił Jej poprowadzić cię do Jezusa, jak najlepsza z matek prowadzi dziecko za rękę.</p>
+    <div class="card">
+      <div id="content" class="content">Podaj imię i kliknij „Start”, aby zacząć dzień 1. Albo kliknij w ikonkę postaci, by wybrać wcześniej zapisanych użytkowników.</div>
+      <div class="meta">
+        <div id="metaDay">Dzień –</div>
+        <div id="metaStep">Krok –/–</div>
+      </div>
+
+      <div class="ctrl-bottom">
+        <button id="prevBottom" class="nav-btn secondary" disabled>⟵ Wstecz</button>
+        <button id="nextBottom" class="nav-btn" disabled>Dalej ⟶</button>
+      </div>
+      
+      <div id="footerDots" class="footer" aria-label="Postęp nowenny (dni)"></div>
     </div>
 
-    <!-- Kafelki: Moja wiara -->
-    <div class="tiles" id="tiles-wiara">
-      <div class="card">
-        <h3>Dom modlitwy</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Dom">
-        <p>Jak stworzyć w swoim domu przestrzeń spotkania z Bogiem i pokoju serca.</p>
-        <div class="tags"><span class="tag">modlitwa</span><span class="tag">duchowość</span></div>
-        <a class="go" href="#wiara/dom-modlitwy">Przejdź</a>
-      </div>
-      <div class="card">
-        <h3>Świadectwa wiary</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Pióro">
-        <p>Prawdziwe historie ludzi, którzy odnaleźli Boga pośród trudności i wątpliwości.</p>
-        <div class="tags"><span class="tag">świadectwa</span><span class="tag">życie</span></div>
-        <a class="go" href="#wiara/swiadectwa-wiary">Przejdź</a>
-      </div>
-      <div class="card">
-        <h3>Maryja prowadzi</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Różaniec">
-        <p>Rozważania o obecności Maryi w naszym codziennym życiu i sile Jej wstawiennictwa.</p>
-        <div class="tags"><span class="tag">maryja</span><span class="tag">różaniec</span></div>
-        <a class="go" href="#wiara/maryja-prowadzi">Przejdź</a>
-      </div>
-    </div>
-
-    <!-- Kafelki: Artykuły -->
-    <div class="tiles" id="tiles-arty">
-      <div class="card">
-        <h3>Światło wiary</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Wiara">
-        <p>Artykuły o nadziei, miłości i wytrwałości w codziennym życiu chrześcijanina.</p>
-        <div class="tags"><span class="tag">wiara</span><span class="tag">życie</span></div>
-        <a class="go" href="#arty/swiatlo-wiary">Czytaj</a>
-      </div>
-      <div class="card">
-        <h3>Pokój serca</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Pokój">
-        <p>Jak odnaleźć spokój duszy i wewnętrzną harmonię dzięki modlitwie i ciszy.</p>
-        <div class="tags"><span class="tag">modlitwa</span><span class="tag">duchowość</span></div>
-        <a class="go" href="#arty/pokoj-serca">Czytaj</a>
-      </div>
-      <div class="card">
-        <h3>Duchowe drogowskazy</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Drogowskazy">
-        <p>Rozważania o tym, jak Bóg prowadzi człowieka przez trudne etapy życia.</p>
-        <div class="tags"><span class="tag">rozważania</span><span class="tag">wiara</span></div>
-        <a class="go" href="#arty/duchowe-drogowskazy">Czytaj</a>
-      </div>
-    </div>
-
-    <!-- Kafelki: Modlitwy -->
-    <div class="tiles" id="tiles-modlitwy">
-      <div class="card">
-        <h3>Różaniec</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Różaniec">
-        <p>Modlitwa, która prowadzi do serca Maryi i uczy nas kontemplacji życia Jezusa.</p>
-        <div class="tags"><span class="tag">maryja</span><span class="tag">modlitwa</span></div>
-        <a class="go" href="https://drogawiary.github.io/RC/">Przejdź</a>
-      </div>
-      <div class="card">
-        <h3>Nowenna</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Nowenna">
-        <p>Dziewięciodniowa modlitwa błagalna, przez którą powierzamy Bogu nasze intencje.</p>
-        <div class="tags"><span class="tag">modlitwa</span><span class="tag">łaska</span></div>
-        <a class="go" href="https://drogawiary.github.io/Nowenna_RW/">Przejdź</a>
-      </div>
-      <div class="card">
-        <h3>Droga Krzyżowa</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Krzyż">
-        <p>Rozważania męki Pańskiej, które pomagają nam w zjednoczeniu z cierpiącym Chrystusem.</p>
-        <div class="tags"><span class="tag">krzyż</span><span class="tag">pasja</span></div>
-        <a class="go" href="#">Przejdź</a>
-      </div>
-    </div>
-
-    <!-- Kafelki: Książki -->
-    <div class="tiles" id="tiles-ksiazki">
-      <div class="card">
-        <h3>Znaki Maryi</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Maryja">
-        <p>Duchowe kompendium objawień maryjnych — od Fatimy po Gietrzwałd.</p>
-        <div class="tags"><span class="tag">maryja</span><span class="tag">objawienia</span></div>
-        <a class="go" href="#">Czytaj</a>
-      </div>
-      <div class="card">
-        <h3>Świadectwo Alberta</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Albert">
-        <p>Poruszająca historia człowieka, który przeszedł od ciemności do światła.</p>
-        <div class="tags"><span class="tag">wiara</span><span class="tag">świadectwo</span></div>
-        <a class="go" href="#">Czytaj</a>
-      </div>
-      <div class="card">
-        <h3>Droga Wiary</h3>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rosary2.jpg/240px-Rosary2.jpg" alt="Droga Wiary">
-        <p>Główne kompendium duchowe — projekt łączący wszystkie rozważania w jedną całość.</p>
-        <div class="tags"><span class="tag">książka</span><span class="tag">kompendium</span></div>
-        <a class="go" href="#">Czytaj</a>
-      </div>
-    </div>
-
-    <!-- Czytnik artykułów (widok pojedynczy) -->
-    <section id="reader" class="intro-box" style="display:none">
-      <h2 id="reader-title">Tytuł</h2>
-      <article id="reader-body">Ładowanie…</article>
-      <div style="margin-top:16px">
-        <button id="backBtn" class="nav-btn" type="button">⟵ Powrót</button>
-      </div>
-    </section>
-
+    <!-- ✅ Poprawiony footer -->
     <footer>
-      Droga wiary — strona dla katolików. ✝️ © 2025<br>
-      <a href="mailto:drogawiary@wp.pl">Strona -->drogawiary@wp.pl</a>
+      Postęp nowenny — dzień po dniu. ✝️ © 2025 
+      <a href="https://drogawiary.github.io/" style="color:inherit;text-decoration:none;font-weight:600;">
+        drogawiary@wp.pl
+      </a>
     </footer>
   </div>
 
-  <script>
-    // --- elementy ---
-    const intro = document.getElementById('intro');
-    const btnWiara = document.getElementById('btn-wiara');
-    const btnArty = document.getElementById('btn-arty');
-    const btnModlitwy = document.getElementById('btn-modlitwy');
-    const btnKsiazki = document.getElementById('btn-ksiazki');
-    const tilesWiara = document.getElementById('tiles-wiara');
-    const tilesArty = document.getElementById('tiles-arty');
-    const tilesModlitwy = document.getElementById('tiles-modlitwy');
-    const tilesKsiazki = document.getElementById('tiles-ksiazki');
-    const buttons = document.querySelectorAll('.nav-btn');
+  <div class="toast" id="toast"><div id="toastMsg">—</div></div>
 
-    const reader = document.getElementById('reader');
-    const readerTitle = document.getElementById('reader-title');
-    const readerBody  = document.getElementById('reader-body');
-    const backBtn     = document.getElementById('backBtn');
+<script>
+'use strict';
 
-    // --- placeholdery treści (działa od razu bez plików) ---
-    const INLINE_CONTENT = {
-      'wiara/dom-modlitwy': '<p><em>Tu będzie treść artykułu do Moja Wiara — Dom modlitwy.</em> Dodaj opis jak przygotować w domu stałe miejsce modlitwy, proste rytuały i mały ołtarzyk (Pismo Święte, świeca, obrazek).</p>',
-      'wiara/swiadectwa-wiary': '<p><em>Tu będzie treść artykułu do Moja Wiara — Świadectwa wiary.</em> Wklej tu krótkie osobiste historie i linki do dłuższych świadectw.</p>',
-      'wiara/maryja-prowadzi': '<p><em>Tu będzie treść artykułu do Moja Wiara — Maryja prowadzi.</em> Napisz o wstawiennictwie Maryi w codzienności i praktyce różańca.</p>',
-      'arty/swiatlo-wiary': '<p><em>Tu będzie treść artykułu do Artykuły — Światło wiary.</em> Wprowadzenie do cyklu rozważań: nadzieja, miłość, wytrwałość.</p>',
-      'arty/pokoj-serca': '<p><em>Tu będzie treść artykułu do Artykuły — Pokój serca.</em> Krótka myśl o modlitwie serca i przebaczeniu.</p>',
-      'arty/duchowe-drogowskazy': '<p><em>Tu będzie treść artykułu do Artykuły — Duchowe drogowskazy.</em> Jak rozeznawać decyzje z Bogiem: Słowo, spowiedź, kierownictwo duchowe.</p>'
-    };
+// 🔒 Tryb testów (blokuje zapisy do localStorage w czasie selfTests)
+let TESTING = false;
 
-    // map tytułów (ładny H2)
-    const TITLES = {
-      'wiara/dom-modlitwy': 'Dom modlitwy',
-      'wiara/swiadectwa-wiary': 'Świadectwa wiary',
-      'wiara/maryja-prowadzi': 'Maryja prowadzi',
-      'arty/swiatlo-wiary': 'Światło wiary',
-      'arty/pokoj-serca': 'Pokój serca',
-      'arty/duchowe-drogowskazy': 'Duchowe drogowskazy',
-    };
+/* ============================
+   BLOKI TREŚCI — pełna treść (stabilna)
+   ============================ */
+const SEKWE = `
+<h3>Sekwencja do Ducha Świętego</h3>
+<p>
+Przybądź, Duchu Święty, ześlij z nieba wzięty światła Twego strumień.<br/>
+Przyjdź, Ojcze ubogich, Dawco darów mnogich, przyjdź, Światłości sumień.<br/>
+O najmilszy z gości, słodka serc radości, słodkie orzeźwienie.<br/>
+W pracy Tyś ochłodą, w skwarze żywą wodą, w płaczu utulenie.<br/>
+Światłości najświętsza, serc wierzących wnętrza poddaj Twej potędze.<br/>
+Bez Twojego tchnienia cóż jest wśród stworzenia? Jeno cierń i nędze.<br/>
+Obmyj, co nieświęte, oschłym wlej zachętę, ulecz serca ranę.<br/>
+Nagnij, co jest harde, rozgrzej serca twarde, prowadź zabłąkane.<br/>
+Daj Twoim wierzącym, w Tobie ufającym, siedmiorakie dary.<br/>
+Daj zasługę męstwa, daj wieniec zwycięstwa, daj szczęście bez miary. Amen.
+</p>`;
 
-    // skąd pobieramy pliki (gdy dodasz content/*.md w repo)
-    const PATH = (slug) => {
-      const [sec, name] = slug.split('/');
-      if (sec === 'wiara') return `content/wiara/${name}.md`;
-      if (sec === 'arty')  return `content/arty/${name}.md`;
-      return null;
-    };
+const SKLAD = `
+<h3>Skład Apostolski</h3>
+<p>
+Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi.<br/>
+I w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego,<br/>
+który się począł z Ducha Świętego, narodził się z Maryi Panny,<br/>
+umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion,<br/>
+zstąpił do piekieł, trzeciego dnia zmartwychwstał,<br/>
+wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego,<br/>
+stamtąd przyjdzie sądzić żywych i umarłych.<br/>
+Wierzę w Ducha Świętego, święty Kościół powszechny,<br/>
+świętych obcowanie, grzechów odpuszczenie,<br/>
+ciała zmartwychwstanie, żywot wieczny. Amen.
+</p>`;
 
-    function clearAll() {
-      [tilesWiara, tilesArty, tilesModlitwy, tilesKsiazki].forEach(el => el && (el.style.display = 'none'));
-      intro.style.display = 'none';
-      reader.style.display = 'none';
-    }
+const AKT_ZALU = `
+<h3>Akt żalu</h3>
+<p>
+Boże mój, z całego serca żałuję za wszystkie moje grzechy i wyrzekam się ich,<br/>
+ponieważ grzesząc, nie tylko zasłużyłem na kary sprawiedliwie przez Ciebie ustanowione,<br/>
+ale szczególnie dlatego żałuję, że obraziłem Ciebie, najwyższe dobro<br/>
+i jedynie godnego, aby być ponad wszystko kochanym.<br/>
+Dlatego z całą mocą przyrzekam, z pomocą łaski Twojej,<br/>
+już więcej nie grzeszyć i na przyszłość unikać okazji do grzechu. Amen.
+</p>`;
 
-    function setActive(btn) {
-      buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-      if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); }
-    }
+const MODL_MARYJA = `
+<h3>Modlitwa do Maryi Rozwiązującej Węzły</h3>
+<p>
+Matko Boża, która rozwiązujesz węzły,<nobr></nobr><br/>
+Ty wiesz, że moje życie jest pełne „węzłów”, które mnie dławią, przytłaczają i uciskają.<br/>
+Zawierzam się Tobie z ufnością, że je rozwiążesz,<br/>
+i przez Twe potężne wstawiennictwo Pan udzieli mi spokoju serca,<br/>
+zdrowia ciała i ducha, i zaprowadzi mnie do nieskończonej radości.<br/>
+Maryjo, nie pozwól, bym uległ pokusie,<br/>
+ale uwolnij mnie od wszelkiej niewoli, lęku i niepewności.<br/>
+Udziel mi Twej łaski, abym podążał właściwą ścieżką i nie popełniał błędów.<br/>
+Rozwiąż dziś moje węzły, a kiedy nadejdzie moja godzina,<br/>
+rozwiąż ostatni – węzeł mojej śmierci –<br/>
+abym ostatecznie wolny od jakiegokolwiek grzechu<br/>
+mógł wejść do szczęścia wiecznego. Amen.
+</p>`;
 
-    function showSection(section, button) {
-      const isActive = button.classList.contains('active');
-      // toggle zachowanie: kliknięcie aktywnego przycisku wraca do Intro
-      if (isActive) {
-        setActive(null);
-        clearAll();
-        intro.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        location.hash = '';
-        return;
-      }
+// — Podziękowanie i ekrany końcowe —
+const PODZIEKOWANIE_MARYI = `
+<h3>Podziękowanie Maryi Rozwiązującej Węzły</h3>
+<p>
+Maryjo Rozwiązująca Węzły, z radością w sercu, z duszą przepełnioną wdzięcznością powracam do Ciebie,<br/>
+aby podziękować za otrzymane łaski.<br/><br/>
 
-      setActive(button);
-      clearAll();
-      if(section === 'wiara')        tilesWiara.style.display = 'grid';
-      else if(section === 'arty')    tilesArty.style.display = 'grid';
-      else if(section === 'modlitwy')tilesModlitwy.style.display = 'grid';
-      else if(section === 'ksiazki') tilesKsiazki.style.display = 'grid';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+Chcę być całkowicie Twój. Pomóż mi kroczyć wraz z Tobą drogą wierności Jezusowi w Jego Kościele.<br/><br/>
 
-    // przyciski główne
-    btnWiara.addEventListener('click',   () => { showSection('wiara', btnWiara); location.hash = '#wiara'; });
-    btnArty.addEventListener('click',    () => { showSection('arty', btnArty); location.hash = '#arty'; });
-    btnModlitwy.addEventListener('click',() => { showSection('modlitwy', btnModlitwy); location.hash = '#modlitwy'; });
-    btnKsiazki.addEventListener('click', () => { showSection('ksiazki', btnKsiazki); location.hash = '#ksiazki'; });
+Dziękuję, Święta Dziewico, za to, że zawsze trzymasz mnie z miłością za rękę<br/>
+i kierujesz moje serce ku miłości do Jezusa.<br/><br/>
 
-    // --- Router hash ---
-    async function showArticle(section, name) {
-      // podświetl sekcję
-      const map = { wiara: btnWiara, arty: btnArty };
-      setActive(map[section] || null);
-      clearAll();
+Dziękuję, że uczysz mnie szukać mojego dobra jedynie w Bogu,<br/>
+który jest źródłem wszelkiego pokoju i łaski.<br/><br/>
 
-      // ustaw tytuł
-      const slug = `${section}/${name}`;
-      readerTitle.textContent = TITLES[slug] || 'Artykuł';
+Dziękuję, że uczysz mnie pragnąć wypełniania tylko Jego woli,<br/>
+aby mógł urzeczywistniać we mnie plan, który odwiecznie ustanowił.<br/><br/>
 
-      // wczytaj treść: najpierw z pliku, jeśli brak — z INLINE_CONTENT
-      const url = PATH(slug);
-      readerBody.innerHTML = 'Ładowanie…';
-      let loaded = false;
-      if (url) {
-        try {
-          const res = await fetch(url, { cache: 'no-store' });
-          if (res.ok) {
-            let text = await res.text();
-            if (url.endsWith('.md')) {
-              text = text
-                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-                .replace(/\n$/g, '')
-                .replace(/\n\s*\n/g, '</p><p>')
-                .replace(/^(?!<h\d|<p|<ul|<ol|<blockquote|<pre|<code)/gim, '<p>')
-                .replace(/<\/p><p><\/p>/g, '</p>');
-              readerBody.innerHTML = text.startsWith('<') ? text : `<p>${text}</p>`;
-            } else {
-              readerBody.innerHTML = text;
-            }
-            loaded = true;
-          }
-        } catch(e) { /* brak pliku — fallback niżej */ }
-      }
+Dziękuję, że uczysz mnie życia z Jezusem i dla Jezusa.<br/>
+Dziękuję za to, że kiedy upadnę, pomagasz mi wrócić do Niego<br/>
+w sakramencie pojednania i radości.<br/><br/>
 
-      if (!loaded) {
-        readerBody.innerHTML = INLINE_CONTENT[slug] || '<p>(Brak treści — dodaj plik .md lub uzupełnij INLINE_CONTENT.)</p>';
-      }
+Dzięki niemu, Święta Dziewico, z Bożym pokojem w sercu mogę nieść prawdziwą radość i prawdziwy pokój wszystkim.<br/>
+Wyproś mi wielką miłość do wszystkich sakramentów – znaków, które Twój Syn nam zostawił,<br/>
+aby się w nich z nami spotkać.<br/><br/>
 
-      reader.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+Dziękuję, Maryjo, że opiekujesz się moją rodziną.<br/>
+Spraw, aby zawsze pozostała zjednoczona i niezachwiana w nieskończonej miłości Boga.<br/><br/>
 
-    function showTiles(section) {
-      setActive(
-        section==='wiara'?btnWiara:
-        section==='arty'?btnArty:
-        section==='modlitwy'?btnModlitwy:
-        section==='ksiazki'?btnKsiazki:null
-      );
-      clearAll();
-      if(section==='wiara') tilesWiara.style.display='grid';
-      else if(section==='arty') tilesArty.style.display='grid';
-      else if(section==='modlitwy') tilesModlitwy.style.display='grid';
-      else if(section==='ksiazki') tilesKsiazki.style.display='grid';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+Dziękuję, Maryjo, że udzielasz mojej rodzinie potrzebnych łask duchowych i materialnych.<br/>
+Proszę, pomnóż w nas wiarę, nadzieję i miłość.<br/><br/>
 
-    function handleHash(){
-      const h = (location.hash||'').replace(/^#/, '').trim(); // '', 'wiara', 'wiara/dom-modlitwy'
-      if(!h){ setActive(null); clearAll(); intro.style.display='block'; return; }
-      const [section, name] = h.split('/');
-      if(section && !name){ showTiles(section); return; }
-      if(section && name){ showArticle(section, name); return; }
-      // fallback
-      setActive(null); clearAll(); intro.style.display='block';
-    }
+<strong>Dziękuję, że pozwoliłaś mi odkryć moc tej nowenny. Amen.</strong>
+</p>`;
 
-    window.addEventListener('hashchange', handleHash);
-    document.addEventListener('DOMContentLoaded', handleHash);
+const ZAKONCZ_DZIEN_INFO = `
+<h3>Ukończyłeś pierwszy dzień nowenny</h3>
+<p>Jutro, po zalogowaniu, otworzy się <strong>kolejny dzień nowenny</strong>. Kliknij <em>Dalej</em>, aby zakończyć dzień i wrócić do początku.</p>`;
 
-    // Powrót: wracamy do listy danej sekcji
-    backBtn.addEventListener('click', () => {
-      const h = (location.hash||'').replace(/^#/, '').trim();
-      const section = h.split('/')[0] || 'wiara';
-      location.hash = '#' + section;
-    });
-  </script>
-</body>
-</html>
+const ZAKONCZ_DZIEN_GENERIC = `
+<h3>Ukończyłeś ten dzień nowenny</h3>
+<p>Kliknij <em>Dalej</em>, aby wrócić do początku. Kolejny dzień otworzy się zgodnie z kalendarzem rozpoczęcia.</p>`;
+
+const ZAKONCZ_DZIEN_FINAL = `
+<h3>Ukończyłeś całą nowennę 🙏❤️ </h3>
+<p>Naciśnij <em>Dalej</em> lub <em>Reset</em>, aby zakończyć nowennę i powrócić do strony startowej.<br/>
+Niech Maryja prowadzi Cię dalej w codziennym życiu. ❤️🌿</p>`;
+
+// --- Litania i modlitwa św. Bernarda (skrót) ---
+const LITANIA_LORETANSKA = `
+<h3>Litania Loretańska do Najświętszej Maryi Panny</h3>
+<p>
+Kyrie eleison, Christe eleison, Kyrie eleison.<br/>
+Chryste, usłysz nas. Chryste, wysłuchaj nas.<br/>
+Ojcze z nieba, Boże — zmiłuj się nad nami.<br/>
+Synu, Odkupicielu świata, Boże — zmiłuj się nad nami.<br/>
+Duchu Święty, Boże — zmiłuj się nad nami.<br/>
+Święta Trójco, Jedyny Boże — zmiłuj się nad nami.<br/><br/>
+
+Święta Maryjo — módl się za nami.<br/>
+Święta Boża Rodzicielko — módl się za nami.<br/>
+Święta Panno nad pannami — módl się za nami.<br/>
+Matko Chrystusowa — módl się za nami.<br/>
+Matko Kościoła — módl się za nami.<br/>
+Matko łaski Bożej — módl się za nami.<br/>
+Matko nieskalana — módl się za nami.<br/>
+Matko najczystsza — módl się za nami.<br/>
+Matko dziewicza — módl się za nami.<br/>
+Matko nienaruszona — módl się za nami.<br/>
+Matko najmilsza — módl się za nami.<br/>
+Matko przedziwna — módl się za nami.<br/>
+Matko dobrej rady — módl się za nami.<br/>
+Matko Stworzyciela — módl się za nami.<br/>
+Matko Zbawiciela — módl się za nami.<br/><br/>
+
+Panno roztropna — módl się za nami.<br/>
+Panno czcigodna — módl się za nami.<br/>
+Panno wsławiona — módl się za nami.<br/>
+Panno można — módl się za nami.<br/>
+Panno łaskawa — módl się za nami.<br/>
+Panno wierna — módl się za nami.<br/><br/>
+
+Zwierciadło sprawiedliwości — módl się za nami.<br/>
+Stolico mądrości — módl się za nami.<br/>
+Przyczyno naszej radości — módl się za nami.<br/>
+Przybytku Ducha Świętego — módl się za nami.<br/>
+Przybytku chwalebny — módl się za nami.<br/>
+Przybytku sławny pobożności — módl się za nami.<br/>
+Różo duchowna — módl się za nami.<br/>
+Wieżo Dawidowa — módl się za nami.<br/>
+Wieżo z kości słoniowej — módl się za nami.<br/>
+Domie złoty — módl się za nami.<br/>
+Arko przymierza — módl się za nami.<br/>
+Bramo niebieska — módl się za nami.<br/>
+Gwiazdo zaranna — módl się za nami.<br/>
+Uzdrowienie chorych — módl się za nami.<br/>
+Ucieczko grzesznych — módl się za nami.<br/>
+Pocieszycielko strapionych — módl się za nami.<br/>
+Wspomożenie wiernych — módl się za nami.<br/><br/>
+
+Królowo Aniołów — módl się za nami.<br/>
+Królowo Patriarchów — módl się za nami.<br/>
+Królowo Proroków — módl się za nami.<br/>
+Królowo Apostołów — módl się za nami.<br/>
+Królowo Męczenników — módl się za nami.<br/>
+Królowo Wyznawców — módl się za nami.<br/>
+Królowo Dziewic — módl się za nami.<br/>
+Królowo Wszystkich Świętych — módl się za nami.<br/>
+Królowo bez zmazy pierworodnej poczęta — módl się za nami.<br/>
+Królowo Wniebowzięta — módl się za nami.<br/>
+Królowo Różańca Świętego — módl się za nami.<br/>
+Królowo rodzin — módl się za nami.<br/>
+Królowo pokoju — módl się za nami.<br/>
+Królowo Polski — módl się za nami.<br/><br/>
+
+Baranku Boży, który gładzisz grzechy świata — przepuść nam, Panie.<br/>
+Baranku Boży, który gładzisz grzechy świata — wysłuchaj nas, Panie.<br/>
+Baranku Boży, który gładzisz grzechy świata — zmiłuj się nad nami.<br/><br/>
+
+<b>W okresie wielkanocnym:</b><br/>
+P: Raduj się i wesel, Panno Maryjo, Alleluja.<br/>
+W: Bo zmartwychwstał Pan prawdziwie, Alleluja.<br/><br/>
+Módlmy się:<br/>
+Boże, który raczyłeś uweselić świat przez zmartwychwstanie Syna swego, Pana naszego Jezusa Chrystusa,<br/>
+daj prosimy, abyśmy przez Jego Rodzicielkę, Maryję Pannę, dostąpili radości życia wiecznego.<br/>
+Przez Chrystusa, Pana naszego. <strong>Amen.</strong><br/><br/>
+
+<b>Poza okresem wielkanocnym:</b><br/>
+P: Módl się za nami, święta Boża Rodzicielko.<br/>
+W: Abyśmy się stali godnymi obietnic Chrystusowych.<br/><br/>
+Módlmy się:<br/>
+Panie, nasz Boże, daj nam, sługom swoim, cieszyć się trwałym zdrowiem duszy i ciała,<nobr></nobr><br/>
+i za wstawiennictwem Najświętszej Maryi, zawsze Dziewicy,<br/>
+uwolnij nas od doczesnych utrapień i obdarz wieczną radością.<br/>
+Przez Chrystusa, Pana naszego. <strong>Amen.</strong>
+</p>`;
+
+const MODL_SW_BERNARDA = `
+<h3>Modlitwa św. Bernarda (Memorare)</h3>
+<p>
+Pomnij, o Najświętsza Panno Maryjo,<br/>
+że nigdy nie słyszano,<br/>
+abyś opuściła tego,<br/>
+kto się do Ciebie ucieka,<br/>
+Twej pomocy wzywa,<br/>
+Ciebie o przyczynę prosi.<br/><br/>
+
+Tą ufnością ożywiony,<br/>
+do Ciebie, o Panno nad pannami i Matko, biegnę,

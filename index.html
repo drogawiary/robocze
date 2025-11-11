@@ -96,20 +96,20 @@
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; background:var(--bg); color:var(--text); font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;}
-/* Obwolutka jak w karcie (.card) – identyczne kolory, border, radius, cień */
-.wrap{
-  max-width:800px;
-  margin:0 auto;
-  padding:18px;
+/* Panel-obwolutka tylko dla stopki */
+.footer-frame{
   background: linear-gradient(180deg, var(--panel), var(--panel-2));
-  border: 1px solid #ffffff12;     /* jak .card */
-  border-radius: 18px;             /* jak .card */
-  box-shadow: 0 10px 30px #0003;   /* jak .card */
+  border: 1px solid #ffffff12;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px #0004;
+  padding: 12px 8px 20px 8px;
+  margin-top: 28px;
 }
-.dark .wrap{
+.dark .footer-frame{
   border-color:#ffffff22;
-  box-shadow: 0 14px 50px #0006;
+  box-shadow:0 10px 35px #0006;
 }
+
   header{display:block; margin-bottom:14px}
 .banner{
   background: linear-gradient(180deg, #0d47a1, #1976d2);  /* głęboki gradient niebieski */
@@ -241,6 +241,7 @@
       
 <div id="footerDots" class="footer" aria-label="Postęp nowenny (dni)"></div>
 
+<div class="footer-frame">
 <footer class="footer-bar">
   <span>„Nowenna — dzień po dniu” ✝️ © 2025</span>
   <a href="https://drogawiary.github.io/" rel="noopener"

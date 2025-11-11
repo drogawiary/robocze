@@ -96,7 +96,20 @@
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; background:var(--bg); color:var(--text); font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;}
-  .wrap{max-width:800px; margin:0 auto; padding:18px;}
+/* Obwolutka jak w karcie (.card) – identyczne kolory, border, radius, cień */
+.wrap{
+  max-width:800px;
+  margin:0 auto;
+  padding:18px;
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid #ffffff12;     /* jak .card */
+  border-radius: 18px;             /* jak .card */
+  box-shadow: 0 10px 30px #0003;   /* jak .card */
+}
+.dark .wrap{
+  border-color:#ffffff22;
+  box-shadow: 0 14px 50px #0006;
+}
   header{display:block; margin-bottom:14px}
 .banner{
   background: linear-gradient(180deg, #0d47a1, #1976d2);  /* głęboki gradient niebieski */

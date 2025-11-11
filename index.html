@@ -178,22 +178,30 @@
   font-weight: 600;
 }
 
-.footer-bar button#peekBtn {
-  margin-top: 10px;
-  padding: 8px 26px;        /* 🔹 więcej luzu – szersze tło */
-  min-width: 120px;         /* 🔹 gwarantuje szerokość nawet przy (i) */
-  height: auto;
-  font-weight: 700;
+.footer-bar button#peekBtn{
+  /* rozmiar i wygląd */
+  padding: 8px 24px;
+  min-width: 140px;
   background: #dbe5ff;
   color: #000033;
   border: none;
-  border-radius: 14px;      /* 🔹 bardziej miękkie zaokrąglenie */
+  border-radius: 14px;
+  font-weight: 700;
+
+  /* idealne centrowanie zawartości */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* żeby nic się nie łamało ani nie „uciekało” */
+  white-space: nowrap;
+  line-height: 1;
+  text-align: center;
+  box-sizing: border-box;
+
   cursor: pointer;
   transition: 0.2s ease;
-  white-space: nowrap;      /* 🔹 nie łamie napisu */
 }
-
-
 
 .footer-bar button#peekBtn:hover {
   background: #c5d5ff;

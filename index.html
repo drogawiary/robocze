@@ -123,12 +123,14 @@
 }
 
 .banner h1{
-  margin:0;
-  font-size:clamp(26px,4vw,38px);
-  font-weight:800;
-  letter-spacing:1px;
-  text-shadow:0 0 8px #ffffffcc, 0 0 14px #ffffffaa;
+  margin:0;                        /* usuwa marginesy domyślne wokół nagłówka */
+  font-size:clamp(22px,4.5vw,32px);/* płynny rozmiar: min 22px, max 32px */
+  font-weight:800;                 /* pogrubiony tytuł */
+  letter-spacing:.5px;             /* lekkie rozstawienie liter */
+  color:#fff;                      /* biały tekst */
+  text-shadow: 0 0 8px #ffffffcc, 0 0 22px #d1e6ff99; /* delikatny blask jak w różańcu */
 }
+
 
   .controlbar{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; position:relative}
   .menu{position:absolute; top:100%; margin-top:8px; background:var(--panel); border:1px solid #00000015; box-shadow:0 14px 40px #0003; border-radius:14px; padding:8px; min-width:220px; max-width:280px; z-index:50; display:none}

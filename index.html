@@ -204,10 +204,21 @@
   text-align: center;
 }
 
+/* 📌 Ustaw menu profili centralnie pod paskiem i nad treścią */
+.controlbar { position: relative; }
+.menu {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%;
+  margin-top: 8px;
+  z-index: 9999;
+  max-width: 280px;
+}
 
 </style>
 </head>
 <body>
+
   <div class="wrap">
     <header>
       <div class="banner"><h1>Nowenna rozwiązująca węzły</h1></div>

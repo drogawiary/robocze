@@ -90,6 +90,8 @@
   font-style: italic;
   margin-top: 6px;
 }
+
+
    
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -146,6 +148,23 @@
     text-align:center;
   }
   .dark .previewInfo{ background:#0b133a; }
+  .footer button#peekBtn {
+  width: 36px;
+  height: 36px;
+  font-weight: 700;
+  background: #2450ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin-left: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.footer button#peekBtn:hover {
+  background: #3a65ff;
+}
+
 </style>
 </head>
 <body>
@@ -158,7 +177,6 @@
           <button id="nameBtn" class="btn square" title="Wybierz zapisane imię">👤</button>
           <input id="nameInput" type="text" placeholder="np. Ania" maxlength="24" />
           <button id="startBtn" class="btn start">Start</button>
-          <button id="peekBtn" class="btn square" title="Podgląd wszystkich dni (X)">(i)</button>
         </div>
         <div id="nameMenu" class="menu" aria-hidden="true"></div>
       </div>
@@ -180,7 +198,10 @@
         <button id="prevBottom" class="nav-btn secondary" disabled>⟵ Wstecz</button>
         <button id="nextBottom" class="nav-btn" disabled>Dalej ⟶</button>
       
-      <div id="footerDots" class="footer" aria-label="Postęp nowenny (dni)"></div>
+      <div id="footerDots" class="footer" aria-label="Postęp nowenny (dni)">
+        <button id="peekBtn" class="btn square" title="Podgląd wszystkich dni (X)">(i)</button>
+      </div>
+
 
 $1
   Postęp nowenny — dzień po dniu. ✝️ © 2025 

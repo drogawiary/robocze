@@ -99,16 +99,24 @@
   .wrap{max-width:800px; margin:0 auto; padding:18px;}
   header{display:block; margin-bottom:14px}
 .banner{
-  background:#cce5ff;          /* maryjny błękit */
-  color:#000033;               /* ciemny niebieski tekst */
-  border-radius:18px;
-  padding:18px;
+  background: linear-gradient(180deg, #0d47a1, #1976d2);  /* głęboki gradient niebieski */
+  color:#ffffff;
+  border-radius:22px;
+  padding:26px 18px;
   text-align:center;
-  box-shadow:0 8px 24px #0002;
-  border:1px solid #ffffff70;
-  margin-bottom:12px;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+  border:1px solid #1a3c80;
+  margin-bottom:14px;
 }
-  .banner h1{margin:0; font-size:clamp(22px,4.5vw,32px); font-weight:800; letter-spacing:.2px}
+
+.banner h1{
+  margin:0;
+  font-size:clamp(26px,4vw,38px);
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:0 0 8px #ffffffcc, 0 0 14px #ffffffaa;
+}
+
   .controlbar{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; position:relative}
   .menu{position:absolute; top:100%; margin-top:8px; background:var(--panel); border:1px solid #00000015; box-shadow:0 14px 40px #0003; border-radius:14px; padding:8px; min-width:220px; max-width:280px; z-index:50; display:none}
   .menu.show{display:block}

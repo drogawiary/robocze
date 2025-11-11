@@ -180,9 +180,9 @@
 
 .footer-bar button#peekBtn {
   margin-top: 10px;
-  padding: 6px 14px;   /* 🔹 odrobina luzu wewnątrz */
-  min-width: 80px;     /* 🔹 zachowuje kształt dla krótkiego (i) */
-  height: auto;        /* 🔹 pozwala rosnąć przy dłuższym tekście */
+  padding: 6px 14px;
+  min-width: 80px;
+  height: auto;
   font-weight: 700;
   background: #dbe5ff;
   color: #000033;
@@ -190,7 +190,9 @@
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s ease;
+  white-space: nowrap;   /* ⬅️ to dodaj */
 }
+
 
 .footer-bar button#peekBtn:hover {
   background: #c5d5ff;
